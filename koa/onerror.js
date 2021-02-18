@@ -1,5 +1,5 @@
 /**
- * @fileOverview 异常处理中间件
+ * @fileOverview 异常处理
  * @name onerror.js
  * @author kiba.x.zhao <kiba.rain@qq.com>
  * @license MIT

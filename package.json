@@ -65,14 +65,15 @@
   "author": "kiba.x.zhao",
   "license": "MIT",
   "dependencies": {
+    "@koa/router": "^10.0.0",
     "brick-engine": "^0.3.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-compose": "^4.1.0",
     "koa-compress": "^5.0.1",
     "koa-jwt": "^4.0.0",
     "koa-onerror": "^4.1.0",
     "koa-override": "^3.0.0",
-    "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
     "koa-views": "^7.0.0"
   }
