@@ -1,0 +1,79 @@
+{
+  "name": "brick-engine-koa",
+  "version": "0.0.0",
+  "description": "koa server xboot engine",
+  "main": "index.js",
+  "types": "typings/index.d.ts",
+  "scripts": {
+    "docs": "jsdoc -c conf.json",
+    "build": "tsc -d",
+    "build:w": "tsc -d -w",
+    "lint": "eslint --fix .",
+    "check": "npm run build && npm run lint",
+    "test": "npm run check && jest --coverage --env=node --runInBand",
+    "watch": "jest --watch"
+  },
+  "files": [
+    "typings",
+    "package.json",
+    "plugins",
+    "plugin.js",
+    "xboot.config.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiba-zhao/brick-engine-koa.git"
+  },
+  "keywords": [
+    "koa",
+    "server",
+    "engine",
+    "brick-engine"
+  ],
+  "bugs": {
+    "url": "https://github.com/kiba-zhao/brick-engine-koa/issues"
+  },
+  "homepage": "https://github.com/kiba-zhao/brick-engine-koa#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/koa": "^2.11.8",
+    "@types/koa-router": "^7.4.1",
+    "@types/lodash": "^4.14.167",
+    "@types/node": "^14.14.20",
+    "eslint": "^7.17.0",
+    "eslint-config-egg": "^9.0.0",
+    "eslint-plugin-jest": "^24.1.3",
+    "husky": "^4.3.7",
+    "jest": "^26.6.3",
+    "jsdoc": "^3.6.6",
+    "typescript": "^4.1.3",
+    "xboot": "^0.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/$1"
+    },
+    "collectCoverageFrom": [
+      "plugins/**/*.js"
+    ]
+  },
+  "author": "kiba.x.zhao",
+  "license": "MIT",
+  "dependencies": {
+    "brick-engine": "^0.3.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-compress": "^5.0.1",
+    "koa-jwt": "^4.0.0",
+    "koa-onerror": "^4.1.0",
+    "koa-override": "^3.0.0",
+    "koa-router": "^10.0.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^7.0.0"
+  }
+}
