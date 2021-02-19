@@ -9,3 +9,11 @@
 exports.koa = {
   package: './plugins/koa',
 };
+
+exports.koaRouter = {
+  package: './plugins/koa-router'
+};
+
+exports.koaStatic = {
+  package: './plugins/koa-static'
+};
