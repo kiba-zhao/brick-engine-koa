@@ -6,13 +6,17 @@
  */
 'use strict';
 
-const Router = require('@koa/router');
+const { route, controller, rest } = require('./lib/utils');
+const Router = require('lib/router');
 
-exports.KoaRouter = Router;
+exports.Router = Router;
 
-function createKoaRouter(...arg) {
+function createRouter(...args) {
   return new Router(...args);
 }
 
-exports.createKoaRouter = createKoaRouter;
+exports.createRouter = createRouter;
 
+exports.route = route;
+exports.controller = controller;
+exports.rest = rest;

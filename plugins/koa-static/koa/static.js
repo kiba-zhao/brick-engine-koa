@@ -6,15 +6,13 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const compose = require('koa-compose');
-
-/**
- * @inject static 注入模型名称
- * @dependency koa-static 依赖配置文件
- */
 
 module.exports = (serve) => {
 
   const { serves } = serve;
   return serves.length > 0 ? compose(serves) : undefined;
 };
+
+inject(module.exports, ['koa-static'], 'static');

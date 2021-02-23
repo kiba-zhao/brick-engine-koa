@@ -1,0 +1,8 @@
+{
+  "a":123,
+  "b":"ddads",
+  "c":true,
+  "d":null,
+  "e":{"text":"haha","number":123,"boolean":true,"arr":[1.2,0.3,"hasd",true]},
+  "f":[1,"aaa",false,null,{"text":"haha","number":123,"boolean":true}]
+}

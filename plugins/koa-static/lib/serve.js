@@ -7,7 +7,6 @@
 'use strict';
 
 const Static = require('koa-static');
-const path = require('path');
 
 const SERVES = Symbol('serves');
 class Serve {
@@ -25,7 +24,7 @@ module.exports = Serve;
 function prepare(loader, opts) {
   const serves = [];
   for (let item of loader) {
-    const root = path.join(item.cwd, item.path);
+    const root = item.filePath;
     serves.push(Static(root, opts));
   }
   this[SERVES] = serves;

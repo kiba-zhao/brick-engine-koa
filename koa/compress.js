@@ -6,15 +6,13 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const compress = require('koa-compress');
-
-/**
- * @inject compress 注入模型名称
- * @dependency config 依赖配置文件
- */
 
 module.exports = (config) => {
 
   const koaCompress = config.koaCompress;
   return koaCompress ? compress(koaCompress) : undefined;
 };
+
+inject(module.exports, ['config'], 'compress');

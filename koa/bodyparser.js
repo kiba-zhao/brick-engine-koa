@@ -6,12 +6,8 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const bodyParser = require('koa-bodyparser');
-
-/**
- * @inject bodyParser 注入模型名称
- * @dependency config 依赖配置文件
- */
 
 module.exports = (config) => {
 
@@ -19,3 +15,5 @@ module.exports = (config) => {
   return koaBodyParser ? bodyParser(koaBodyParser) : undefined;
 
 };
+
+inject(module.exports, ['config'], 'bodyParser');

@@ -6,15 +6,14 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const override = require('koa-override');
 
-/**
- * @inject override 注入模型名称
- * @dependency config 依赖配置文件
- */
 module.exports = (config) => {
 
   const koaOverride = config.koaOverride;
   return koaOverride ? override(koaOverride) : undefined;
 
 };
+
+inject(module.exports, ['config'], 'override');

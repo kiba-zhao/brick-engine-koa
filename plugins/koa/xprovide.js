@@ -10,7 +10,7 @@ const { createKoaServer } = require('.');
 
 module.exports = provider => {
 
-  provider.require(['boot', 'inject', 'config', 'logger?'], (boot, inject, config, logger) => setup(provider, boot, inject, config.koa, logger));
+  provider.require(['boot', 'inject', 'config', 'log4js'], (boot, inject, config, log4js) => setup(provider, boot, inject, config.koa, log4js.get('koa')));
 
 };
 
@@ -23,7 +23,7 @@ function setup(provider, boot, inject, config, logger) {
   const server = createKoaServer({ logger, ...config });
   const store = { koa: server };
   const loader = boot.createBootLoader(config.patterns, boot.context, config.opts || {});
-  const injector = inject.createInjector(loader, { store });
+  const injector = inject.createInjector(loader, { store, addins: inject.addins });
   provider.require(injector.deps, init.bind(this, injector, server));
 
 }

@@ -6,15 +6,13 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const cors = require('@koa/cors');
-
-/**
- * @inject cors 注入模型名称
- * @dependency config 依赖配置文件
- */
 
 module.exports = (config) => {
 
   const koaCors = config.koaCors;
   return koaCors ? cors(koaCors) : undefined;
 };
+
+inject(module.exports, ['config'], 'cors');
