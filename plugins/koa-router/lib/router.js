@@ -11,12 +11,15 @@ const compose = require('koa-compose');
 
 const { KOA_ROUTES, KOA_CONTROLLERS, KOA_RESTS } = require('./constants');
 
+const PLUGINS = Symbol('PLUGINS');
 const GENERATORS = Symbol('GENERATORS');
 const ROUTER = Symbol('router');
 class Router {
   constructor(generators, opts) {
+    const { plugins, ...options } = opts;
     this[GENERATORS] = generators.sort(sortGenerators);
-    this[ROUTER] = new KoaRouter(opts);
+    this[ROUTER] = new KoaRouter(options);
+    this[PLUGINS] = plugins;
   }
 
   get middleware() {
@@ -27,11 +30,13 @@ class Router {
   init(modules) {
     const router = this[ROUTER];
     const generators = this[GENERATORS];
+    const plugins = this[PLUGINS];
     for (let item of modules) {
-      const mws = generateMiddlewares(item, generators);
-      initRoute(router, item, mws);
-      initController(router, item, mws);
-      initRest(router, item, mws);
+      const prefix = item.plugin ? plugins[item.plugin] : undefined;
+      const mws = generateMiddlewares(item, generators, prefix);
+      initRoute(router, item, mws, prefix);
+      initController(router, item, mws, prefix);
+      initRest(router, item, mws, prefix);
     }
   }
 }
@@ -53,21 +58,21 @@ function register(router, target, property, method, path, middlewares) {
 }
 
 
-function initRoute(router, item, middlewares) {
+function initRoute(router, item, middlewares, prefix) {
   const routes = item.factory[KOA_ROUTES] || [];
   for (let route of routes) {
     const { property, method, path } = route;
-    register(router, item.model, property, method, path, middlewares);
+    register(router, item.model, property, method, prefix ? prefix + path : path, middlewares);
   }
 }
 
-function initController(router, item, middlewares) {
+function initController(router, item, middlewares, prefix) {
   const controllers = item.factory[KOA_CONTROLLERS];
   for (let path of controllers) {
     const methods = router.methods;
     for (let method of methods) {
       const m = method.toLowerCase();
-      register(router, item.model, m, m, path, middlewares);
+      register(router, item.model, m, m, prefix ? prefix + path : path, middlewares);
     }
   }
 }
@@ -85,13 +90,13 @@ const REST_PROPERTIES = {
   options: { method: 'options', path: REST_RESOURCE_PATH },
   allow: { method: 'options' },
 };
-function initRest(router, item, middlewares) {
+function initRest(router, item, middlewares, prefix) {
   const rests = item.factory[KOA_RESTS];
   for (let root of rests) {
     for (let property in REST_PROPERTIES) {
       const { path, method } = REST_PROPERTIES[property];
       const _path = path ? root + path : root;
-      register(router, item.model, property, method, _path, middlewares);
+      register(router, item.model, property, method, prefix ? prefix + _path : _path, middlewares);
     }
   }
 }

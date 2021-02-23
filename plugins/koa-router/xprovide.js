@@ -17,15 +17,16 @@ module.exports = provider => {
 
 function setup(provider, boot, inject, config) {
 
+  const { patterns, opts, ...options } = config || {};
   const generators = getGenerators(boot);
-  const router = createRouter(generators, config.opts);
-  if (!config) {
+  const router = createRouter(generators, options);
+  if (!patterns) {
     provider.define('koa-router', [], router);
     return;
   }
 
   const store = { 'koa-router': router };
-  const loader = boot.createBootLoader(config.patterns, boot.context, config.loaderOpts || {});
+  const loader = boot.createBootLoader(patterns, boot.context, opts || {});
   const injector = inject.createInjector(loader, { store, addins: inject.addins });
   provider.define('koa-router', injector.deps, factory.bind(this, injector, router));
 

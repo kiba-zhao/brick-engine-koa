@@ -7,12 +7,19 @@
 'use strict';
 
 const { inject } = require('brick-engine');
-const compose = require('koa-compose');
+const { createKoaServe } = require('../');
 
-module.exports = (serve) => {
+module.exports = (boot, config) => {
 
-  const { serves } = serve;
-  return serves.length > 0 ? compose(serves) : undefined;
+  const { opts, patterns, ...options } = config.koaStatic || {};
+  if (!patterns) {
+    return undefined;
+  }
+
+  const _opts = Object.assign({ expand: false }, opts);
+  const loader = boot.createBootLoader(patterns, boot.context, _opts);
+  const serve = createKoaServe(loader, options);
+  return serve.middleware;
 };
 
-inject(module.exports, ['koa-static'], 'static');
+inject(module.exports, ['boot', 'config'], 'static');

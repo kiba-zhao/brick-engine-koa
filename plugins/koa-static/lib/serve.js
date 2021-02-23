@@ -8,15 +8,16 @@
 
 const Static = require('koa-static');
 const mount = require('koa-mount');
+const compose = require('koa-compose');
 
-const SERVES = Symbol('serves');
+const MIDDLEWARE = Symbol('middleware');
 class Serve {
   constructor(loader, opts) {
     prepare(loader, opts);
   }
 
-  get serves() {
-    return this[SERVES];
+  get middleware() {
+    return this[MIDDLEWARE];
   }
 }
 
@@ -34,5 +35,5 @@ function prepare(loader, opts) {
     }
     serves.push(mw);
   }
-  this[SERVES] = serves;
+  this[MIDDLEWARE] = compose(serves);
 }
