@@ -13,8 +13,12 @@ module.exports = provider => {
 };
 
 function setup(provider, boot, config) {
-  const opts = Object.assign({ expand: false }, config.opts);
-  const loader = boot.createBootLoader(config.patterns, boot.context, opts);
-  const serve = createKoaServe(loader, config.opts);
+  const { opts, patterns, ...options } = config || {};
+  if (!patterns) {
+    return;
+  }
+  const _opts = Object.assign({ expand: false }, opts);
+  const loader = boot.createBootLoader(patterns, boot.context, _opts);
+  const serve = createKoaServe(loader, options);
   provider.define('koa-static', [], serve);
 }

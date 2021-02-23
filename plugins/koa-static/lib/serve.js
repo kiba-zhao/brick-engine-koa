@@ -7,6 +7,7 @@
 'use strict';
 
 const Static = require('koa-static');
+const mount = require('koa-mount');
 
 const SERVES = Symbol('serves');
 class Serve {
@@ -23,9 +24,15 @@ module.exports = Serve;
 
 function prepare(loader, opts) {
   const serves = [];
+  const { plugins, ...options } = opts;
   for (let item of loader) {
     const root = item.filePath;
-    serves.push(Static(root, opts));
+    let mw = Static(root, options);
+    const path = item.plugin ? plugins[item.plugins] : undefined;
+    if (path) {
+      mw = mount(path, mw);
+    }
+    serves.push(mw);
   }
   this[SERVES] = serves;
 }
