@@ -44,6 +44,7 @@
     "@types/koa-static": "^4.0.1",
     "@types/lodash": "^4.14.167",
     "@types/node": "^14.14.20",
+    "@types/supertest": "^2.0.10",
     "eslint": "^7.17.0",
     "eslint-config-egg": "^9.0.0",
     "eslint-plugin-jest": "^24.1.3",
@@ -52,8 +53,10 @@
     "jest": "^26.6.3",
     "jsdoc": "^3.6.6",
     "jsonwebtoken": "^8.5.1",
+    "supertest": "^6.1.3",
     "typescript": "^4.1.3",
-    "xboot": "^0.5.0"
+    "xboot": "^0.5.0",
+    "xprovide": "^0.4.0"
   },
   "husky": {
     "hooks": {
@@ -73,12 +76,13 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
-    "brick-engine": "^0.6.0",
-    "brick-log4js": "^0.1.0",
+    "brick-engine": "^0.7.0",
+    "brick-log4js": "^0.2.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
     "koa-compress": "^5.0.1",
+    "koa-jwt": "^4.0.0",
     "koa-mount": "^4.0.0",
     "koa-onerror": "^4.1.0",
     "koa-override": "^3.0.0",

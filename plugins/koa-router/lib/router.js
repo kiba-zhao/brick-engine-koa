@@ -5,7 +5,9 @@
  * @license MIT
  */
 'use strict';
-const { isArray, isNumber, isFunction } = require('lodash');
+
+const assert = require('assert');
+const { assign, isArray, isObject, isFunction } = require('lodash');
 const KoaRouter = require('@koa/router');
 const compose = require('koa-compose');
 
@@ -13,66 +15,133 @@ const { KOA_ROUTES, KOA_CONTROLLERS, KOA_RESTS } = require('./constants');
 
 const PLUGINS = Symbol('PLUGINS');
 const GENERATORS = Symbol('GENERATORS');
-const ROUTER = Symbol('router');
+const ROUTER = Symbol('ROUTER');
+const MIDDLEWARE = Symbol('MIDDLEWARE');
+
 class Router {
+  /**
+   * 路由类构造函数
+   * @param {Array<Function>} generators 路由响应函数生成器
+   * @param {Object} opts KoaRouter类构造可选项．请参考koa-router文档
+   */
   constructor(generators, opts) {
+
+    assert(isArray(generators) && generators.every(isFunction), '[koa-router] Router Error: wrong generators');
+    assert(isObject(opts), '[koa-router] Router Error: wrong opts');
+    assert(opts.plugins === undefined || isObject(opts.plugins), '[koa-router] Router Error: wrong opts.plugins');
+
     const { plugins, ...options } = opts;
-    this[GENERATORS] = generators.sort(sortGenerators);
+    this[GENERATORS] = generators;
     this[ROUTER] = new KoaRouter(options);
-    this[PLUGINS] = plugins;
+    this[PLUGINS] = plugins || {};
   }
 
+  /**
+   * 获取middleware属性
+   * @return {Function} 路由中间件
+   */
   get middleware() {
-    const router = this[ROUTER];
-    return compose(router.routes(), router.allowedMethods());
+    if (!this[MIDDLEWARE]) {
+      const router = this[ROUTER];
+      this[MIDDLEWARE] = compose([ router.routes(), router.allowedMethods() ]);
+    }
+    return this[MIDDLEWARE];
   }
 
+  /**
+   * 初始化路由
+   * @param {Loader} modules 注入的路由模块
+   */
   init(modules) {
     const router = this[ROUTER];
     const generators = this[GENERATORS];
     const plugins = this[PLUGINS];
-    for (let item of modules) {
+    for (const item of modules) {
       const prefix = item.plugin ? plugins[item.plugin] : undefined;
-      const mws = generateMiddlewares(item, generators, prefix);
-      initRoute(router, item, mws, prefix);
-      initController(router, item, mws, prefix);
-      initRest(router, item, mws, prefix);
+      initRoute(router, item, generators, prefix);
+      initController(router, item, generators, prefix);
+      initRest(router, item, generators, prefix);
     }
   }
 }
 
 module.exports = Router;
 
-function register(router, target, property, method, path, middlewares) {
-  if (!isFunction(router[method]) || !isFunction(target[property]))
-    return;
+/**
+ *
+ * @external "RouteOpts"
+ * @see {@link ./utils|RouteOpts}
+ */
 
-  const mws = [];
-  for (let middleware of middlewares) {
-    if (middleware[property]) {
-      mws.push(...middleware[property]);
-    }
+/**
+ * 路由可选项
+ * @typedef {Object} RouteOpts
+ * @extends external:RouteOpts
+ */
+
+/**
+ * 注册路由函数
+ * @param {KoaRouter} router 路由对象
+ * @param {any} target 目标对象
+ * @param {RouteOpts} opts 路由信息可选项
+ * @param {Array<Function>} generators 路由响应函数生成器
+ */
+function register(router, target, opts, generators) {
+  const { property, method, path, middlewares } = opts;
+  let action = target[property];
+  if (!isFunction(router[method]) || !isFunction(action)) { return; }
+
+  action = action.bind(target);
+  for (const generate of generators) {
+    action = generate(action);
   }
+  assert(isFunction(action), '[koa-router] register Error: action must be a function');
 
-  router[method](path, ...mws, target[property].bind(target));
+  if (isArray(middlewares)) {
+    router[method](path, ...middlewares, action);
+  } else {
+    router[method](path, action);
+  }
 }
 
 
-function initRoute(router, item, middlewares, prefix) {
+/**
+ * 初始化路由信息
+ * @param {KoaRouter} router 路由对象
+ * @param {Object} item 注入对象
+ * @param {Array<Function>} generators 路由响应函数生成器
+ * @param {String} prefix 路由前缀
+ */
+function initRoute(router, item, generators, prefix) {
   const routes = item.factory[KOA_ROUTES] || [];
-  for (let route of routes) {
-    const { property, method, path } = route;
-    register(router, item.model, property, method, prefix ? prefix + path : path, middlewares);
+  for (let opts of routes) {
+    if (prefix) {
+      opts = assign({ path: prefix + opts.path }, opts);
+    }
+    register(router, item.model, opts, generators);
   }
 }
 
-function initController(router, item, middlewares, prefix) {
+/**
+ * 初始化控制器路由信息
+ * @param {KoaRouter} router 路由对象
+ * @param {Object} item 注入对象
+ * @param {Array<Function>} generators 路由响应函数生成器
+ * @param {String} prefix 路由前缀
+ */
+function initController(router, item, generators, prefix) {
   const controllers = item.factory[KOA_CONTROLLERS];
-  for (let path of controllers) {
+  for (const { path, middlewares } of controllers) {
     const methods = router.methods;
-    for (let method of methods) {
+    const mws = middlewares || {};
+    for (const method of methods) {
       const m = method.toLowerCase();
-      register(router, item.model, m, m, prefix ? prefix + path : path, middlewares);
+      if (m === 'head') { continue; }
+      const opts = { path, middlewares: mws[m], method: m, property: m };
+      if (prefix) {
+        opts.path = prefix + opts.path;
+      }
+      register(router, item.model, opts, generators);
     }
   }
 }
@@ -86,35 +155,31 @@ const REST_PROPERTIES = {
   patch: { method: 'patch', path: REST_RESOURCE_PATH },
   delete: { method: 'delete', path: REST_RESOURCE_PATH },
   clean: { method: 'delete' },
-  head: { method: 'head', path: REST_RESOURCE_PATH },
   options: { method: 'options', path: REST_RESOURCE_PATH },
   allow: { method: 'options' },
 };
-function initRest(router, item, middlewares, prefix) {
+
+/**
+ * 初始化rest控制器路由
+ * @param {KoaRouter} router 路由对象
+ * @param {Object} item 注入对象
+ * @param {Array<Function>} generators 路由响应函数生成器
+ * @param {String} prefix 路由前缀
+ */
+function initRest(router, item, generators, prefix) {
   const rests = item.factory[KOA_RESTS];
-  for (let root of rests) {
-    for (let property in REST_PROPERTIES) {
-      const { path, method } = REST_PROPERTIES[property];
-      const _path = path ? root + path : root;
-      register(router, item.model, property, method, prefix ? prefix + _path : _path, middlewares);
+  for (const { path, middlewares } of rests) {
+    const mws = middlewares || {};
+    for (const property in REST_PROPERTIES) {
+      const { path: suffix, method } = REST_PROPERTIES[property];
+      const opts = { path, middlewares: mws[property], method, property };
+      if (suffix) {
+        opts.path = opts.path + suffix;
+      }
+      if (prefix) {
+        opts.path = prefix + opts.path;
+      }
+      register(router, item.model, opts, generators);
     }
   }
-}
-
-function generateMiddlewares(item, generators) {
-
-  const mws = [];
-  for (let generate of generators) {
-    const middlewares = generate(item.factory);
-    if (isArray(middlewares) && middlewares.length > 0) {
-      mws.push(...middlewares);
-    }
-  }
-  return mws;
-}
-
-function sortGenerators(prev, next) {
-  const prevSeq = isNumber(prev.seq) ? prev.seq : Number.MIN_VALUE;
-  const nextSeq = isNumber(next.seq) ? next.seq : Number.MIN_VALUE;
-  return prevSeq - nextSeq;
 }

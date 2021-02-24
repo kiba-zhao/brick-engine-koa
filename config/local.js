@@ -10,7 +10,7 @@ exports.log4js = {
   configure: {
     categories: {
       default: { level: 'trace' },
-      koa: { level: 'trace' }
-    }
-  }
+      koa: { level: 'trace' },
+    },
+  },
 };

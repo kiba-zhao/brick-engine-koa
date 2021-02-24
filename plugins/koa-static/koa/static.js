@@ -22,4 +22,4 @@ module.exports = (boot, config) => {
   return serve.middleware;
 };
 
-inject(module.exports, ['boot', 'config'], 'static');
+inject(module.exports, { deps: [ 'boot', 'config' ], name: 'static' });

@@ -15,8 +15,8 @@ module.exports = env => {
   }
   exports.koa = {
     http: {
-      msg: `http listen on ${httpPort}`, listen: httpPort
-    }
+      msg: `http listen on ${httpPort}`, listen: httpPort,
+    },
   };
 
   return exports;

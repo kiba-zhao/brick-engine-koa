@@ -30,20 +30,18 @@ class KoaServer {
 
     const opts = this[OPTIONS];
     const app = this[APP];
-
-    for (let key of opts.middlewares) {
+    const property = opts.middlewaresProperty;
+    const middlewares = opts[property] || [];
+    for (const key of middlewares) {
       const mw = model[key];
       if (mw) {
         app.use(mw);
       }
     }
 
-    if (opts.http)
-      start(app, http, opts.http, opts.logger);
-    if (opts.https)
-      start(app, https, opts.https, opts.logger);
-    if (opts.http2)
-      start(app, http2, opts.http2, opts.logger);
+    if (opts.http) { start(app, http, opts.http, opts.logger); }
+    if (opts.https) { start(app, https, opts.https, opts.logger); }
+    if (opts.http2) { start(app, http2, opts.http2, opts.logger); }
   }
 }
 
@@ -52,7 +50,7 @@ module.exports = KoaServer;
 function start(app, module, opts, logger) {
   let cb;
   if (opts.msg && logger) {
-    cb = (err) => {
+    cb = err => {
       if (!err) {
         logger.info(opts.msg);
       } else {
@@ -63,4 +61,3 @@ function start(app, module, opts, logger) {
   const server = module.createServer(opts.server, app.callback());
   server.listen(opts.listen, cb);
 }
-

@@ -6,12 +6,8 @@
  */
 'use strict';
 
+const { inject } = require('brick-engine');
 const onerror = require('koa-onerror');
-
-/**
- * @dependency koa 依赖koa模块
- * @dependency config 依赖配置文件
- */
 
 module.exports = (koa, config) => {
 
@@ -21,3 +17,4 @@ module.exports = (koa, config) => {
 
 };
 
+inject(module.exports, { deps: [ 'koa', 'config' ] });

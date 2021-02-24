@@ -7,7 +7,7 @@
 'use strict';
 
 const { route, controller, rest } = require('./lib/utils');
-const Router = require('lib/router');
+const Router = require('./lib/router');
 
 exports.Router = Router;
 

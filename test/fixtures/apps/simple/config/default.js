@@ -6,8 +6,12 @@
  */
 'use strict';
 
-const faker = require('faker');
-
 exports.koaJwt = {
-  secret: faker.internet.password
+  secret: 'asdfgh123',
+};
+
+exports.injectTestString = 'qwerty321';
+
+exports.inject = {
+  services: { patterns: 'services/**/*.js' },
 };

@@ -14,4 +14,4 @@ module.exports = (config, router) => {
   return koaRouter ? router.middleware : undefined;
 };
 
-inject(module.exports, ['config', 'koa-router'], 'router');
+inject(module.exports, { deps: [ 'config', 'koa-router' ], name: 'router' });

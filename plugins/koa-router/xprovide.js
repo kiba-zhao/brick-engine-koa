@@ -11,10 +11,17 @@ const { createRouter } = require('.');
 
 module.exports = provider => {
 
-  provider.require(['boot', 'inject', 'config'], (boot, inject, config) => setup(provider, boot, inject, config.koaRouter));
+  provider.require([ 'boot', 'inject', 'config' ], (boot, inject, config) => setup(provider, boot, inject, config.koaRouter));
 
 };
 
+/**
+ * 安装函数
+ * @param {Provder} provider xprovde依赖模块提供器对象
+ * @param {Object} boot xboot引导模块包
+ * @param {Object} inject 注入模块包
+ * @param {Object} config 配置内容
+ */
 function setup(provider, boot, inject, config) {
 
   const { patterns, opts, ...options } = config || {};
@@ -32,6 +39,11 @@ function setup(provider, boot, inject, config) {
 
 }
 
+/**
+ * 获取路由响应函数生成器
+ * @param {Object} boot xboot引导模块包
+ * @return {Array<Function>} 路由响应函数生成器
+ */
 function getGenerators(boot) {
   const generators = [];
   const loader = boot.createBootLoader('koa_router.js', boot.context);
@@ -43,6 +55,13 @@ function getGenerators(boot) {
 }
 
 
+/**
+ * 路由对象工厂函数
+ * @param {Injector} injector inject模块中Injector类实例
+ * @param {Router} router 路由实例
+ * @param {Array<any>} args 依赖模块
+ * @return {Router} 路由实例
+ */
 function factory(injector, router, ...args) {
   const modules = injector.create(...args);
   router.init(modules);

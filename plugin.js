@@ -7,7 +7,7 @@
 'use strict';
 
 exports.log4js = {
-  package: 'brick-log4js'
+  package: 'brick-log4js',
 };
 
 exports.koa = {
@@ -15,9 +15,9 @@ exports.koa = {
 };
 
 exports.koaStatic = {
-  package: './plugins/koa-static'
+  package: './plugins/koa-static',
 };
 
 exports.koaRouter = {
-  package: './plugins/koa-router'
+  package: './plugins/koa-router',
 };
