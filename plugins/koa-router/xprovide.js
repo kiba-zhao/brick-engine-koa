@@ -25,8 +25,8 @@ module.exports = provider => {
 function setup(provider, boot, inject, config) {
 
   const { patterns, opts, ...options } = config || {};
-  const generators = getGenerators(boot);
-  const router = createRouter(generators, options);
+  const extensions = getExtensions(boot);
+  const router = createRouter(extensions, options);
   if (!patterns) {
     provider.define('koa-router', [], router);
     return;
@@ -40,18 +40,19 @@ function setup(provider, boot, inject, config) {
 }
 
 /**
- * 获取路由响应函数生成器
+ * 获取路由扩展
  * @param {Object} boot xboot引导模块包
- * @return {Array<Function>} 路由响应函数生成器
+ * @return {Array<Function>} 路由扩展
  */
-function getGenerators(boot) {
-  const generators = [];
-  const loader = boot.createBootLoader('koa_router.js', boot.context);
+function getExtensions(boot) {
+  const extensions = [];
+  const loader = boot.createBootLoader('koa.js', boot.context);
   for (const item of loader) {
-    if (!isFunction(item.module)) { continue; }
-    generators.push(item.module);
+    if (isFunction(item.module)) {
+      extensions.push(item.module);
+    }
   }
-  return generators;
+  return extensions;
 }
 
 

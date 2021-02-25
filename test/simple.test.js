@@ -15,6 +15,7 @@ const faker = require('faker');
 const APP_PATH = path.join(__dirname, 'fixtures', 'apps', 'simple');
 const APP_CONFIG = require('./fixtures/apps/simple/config/default');
 const STATIC_JSON = require('./fixtures/apps/simple/public/static.json');
+const SIMPLE_JSON = require('./fixtures/apps/simple/plugins/simple/public/simple.json');
 
 describe('simple.test.js', () => {
 
@@ -56,6 +57,20 @@ describe('simple.test.js', () => {
         .expect(200, STATIC_JSON, done);
     });
 
+    it('success: /public/simple.json', done => {
+      request(app)
+        .get('/public/simple.json')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, SIMPLE_JSON, done);
+    });
+
+    it('not found: /simple.json', done => {
+      request(app)
+        .get('/simple.json')
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
   });
 
   describe('koa-router: route', () => {
@@ -68,6 +83,16 @@ describe('simple.test.js', () => {
 
 
   describe('koa-router: controller', () => {
+
+    it('GET /plugins/simple', done => {
+      const query = { [faker.random.word()]: faker.random.word() };
+      request(app)
+        .get('/plugins/simple')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, { query, params: { plugin: 'simple' } }, done);
+    });
 
     it('GET /simple-ctrl', done => {
       const query = { [faker.random.word()]: faker.random.word() };

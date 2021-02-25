@@ -40,6 +40,7 @@ module.exports = Serve;
 
 /**
  * 预处理函数
+ * @param {Serve} serve 静态服务类实例
  * @param {Loader} loader 模块加载器
  * @param {Object} opts 可选项
  */
@@ -49,7 +50,7 @@ function prepare(serve, loader, opts) {
   for (const item of loader) {
     const root = item.filePath;
     let mw = Static(root, options);
-    const path = item.plugin ? plugins[item.plugins] : undefined;
+    const path = item.plugin ? plugins[item.plugin] : undefined;
     if (path) {
       mw = mount(path, mw);
     } else if (prefix) {

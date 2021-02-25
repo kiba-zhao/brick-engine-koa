@@ -15,3 +15,11 @@ exports.injectTestString = 'qwerty321';
 exports.inject = {
   services: { patterns: 'services/**/*.js' },
 };
+
+exports.koaRouter = {
+  plugins: { simple: '/plugins' },
+};
+
+exports.koaStatic = {
+  plugins: { simple: '/public' },
+};
