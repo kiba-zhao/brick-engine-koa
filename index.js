@@ -5,15 +5,18 @@
  * @license MIT
  */
 'use strict';
-
-const { route, controller, rest } = require('./plugins/koa-router');
-const { inject, provide } = require('brick-engine');
+const engine = require('brick-engine');
+const { APP } = require('./plugins/koa');
+const { route, controller, rest, middleware } = require('./plugins/koa-router');
 const { logger } = require('brick-log4js');
 
-exports.inject = inject;
-exports.provide = provide;
+exports.APP = APP;
+
 exports.logger = logger;
 
 exports.route = route;
 exports.controller = controller;
 exports.rest = rest;
+exports.middleware = middleware;
+
+Object.assign(module.exports, engine);

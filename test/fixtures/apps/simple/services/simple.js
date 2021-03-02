@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { provide, inject } = require('../../../../..');
+const { ENGINE, provide, inject } = require('../../../../..');
 
 class SimpleService {
 
@@ -18,4 +18,4 @@ class SimpleService {
 module.exports = SimpleService;
 
 inject(module.exports, { name: 'Simple' });
-provide(module.exports, { property: 'config', dep: 'config' });
+provide(module.exports, { property: 'config', dep: { id: ENGINE, transform: _ => _.config } });

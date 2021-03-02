@@ -6,15 +6,17 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
+const { KOA } = require('../plugins/koa');
 const onerror = require('koa-onerror');
 
-module.exports = (koa, config) => {
+module.exports = (koa, engine) => {
 
+  const config = engine.config;
   const koaOnError = config.koaOnError;
   const app = koa.app;
   onerror(app, koaOnError);
 
 };
 
-inject(module.exports, { deps: [ 'koa', 'config' ] });
+inject(module.exports, { deps: [ KOA, ENGINE ] });

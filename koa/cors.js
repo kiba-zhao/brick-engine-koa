@@ -6,13 +6,14 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
 const cors = require('@koa/cors');
 
-module.exports = config => {
+module.exports = engine => {
 
+  const config = engine.config;
   const koaCors = config.koaCors;
   return koaCors ? cors(koaCors) : undefined;
 };
 
-inject(module.exports, { deps: [ 'config' ], name: 'cors' });
+inject(module.exports, { deps: [ ENGINE ], name: 'cors' });

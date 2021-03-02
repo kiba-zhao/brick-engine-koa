@@ -7,14 +7,15 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
 const bodyParser = require('koa-bodyparser');
 
-module.exports = config => {
+module.exports = engine => {
 
+  const config = engine.config;
   const koaBodyParser = config.koaBodyParser;
   return koaBodyParser ? bodyParser(koaBodyParser) : undefined;
 
 };
 
-inject(module.exports, { deps: [ 'config' ], name: 'bodyParser' });
+inject(module.exports, { deps: [ ENGINE ], name: 'bodyParser' });

@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { route, controller, rest } = require('./lib/utils');
+const { route, controller, rest, middleware } = require('./lib/utils');
 const Router = require('./lib/router');
 
 exports.Router = Router;
@@ -20,3 +20,4 @@ exports.createRouter = createRouter;
 exports.route = route;
 exports.controller = controller;
 exports.rest = rest;
+exports.middleware = middleware;

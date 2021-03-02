@@ -7,11 +7,9 @@
 'use strict';
 
 const KoaServer = require('./lib/koa_server');
+const { KOA, APP } = require('./lib/constants');
 
 exports.KoaServer = KoaServer;
 
-function createKoaServer(...args) {
-  return new KoaServer(...args);
-}
-
-exports.createKoaServer = createKoaServer;
+exports.KOA = KOA;
+exports.APP = APP;

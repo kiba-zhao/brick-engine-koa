@@ -7,10 +7,10 @@
 'use strict';
 
 const path = require('path');
-const http = require('http');
-const xboot = require('xboot');
 const request = require('supertest');
 const faker = require('faker');
+const { Engine, inject } = require('brick-engine');
+const { APP } = require('../plugins/koa');
 
 const APP_PATH = path.join(__dirname, 'fixtures', 'apps', 'simple');
 const APP_CONFIG = require('./fixtures/apps/simple/config/default');
@@ -19,32 +19,21 @@ const SIMPLE_JSON = require('./fixtures/apps/simple/plugins/simple/public/simple
 
 describe('simple.test.js', () => {
 
-  let app;
-  const context = {};
-
-  function createServer(done, ...args) {
-    const server = http.createServer(...args);
-    function listen(..._args) {
-      app = server.listen(..._args);
-      done();
-      return app;
-    }
-    return { listen };
-  }
+  let app,
+    engine;
 
   beforeAll(done => {
+    engine = new Engine({ chdir: APP_PATH });
+    engine.init();
 
-    jest.doMock('http', () => ({ createServer: createServer.bind(this, done) }), { virtual: true });
-    jest.resetModules();
-
-    const loader = xboot.createBootLoader('xboot.js', context, { chdir: APP_PATH });
-    loader.forEach(_ => xboot.setup(_, xboot, context));
-
+    const fn = _ => { app = _; done(); };
+    inject(fn, { deps: [ APP ] });
+    engine.use(fn);
   });
 
   afterAll(() => {
     app = undefined;
-    jest.dontMock('http');
+    engine = undefined;
   });
 
   describe('koa-static', () => {
@@ -80,7 +69,6 @@ describe('simple.test.js', () => {
         .expect(200, APP_CONFIG.injectTestString, done);
     });
   });
-
 
   describe('koa-router: controller', () => {
 
@@ -159,7 +147,6 @@ describe('simple.test.js', () => {
     });
 
   });
-
 
   describe('koa-router: rest', () => {
 
@@ -268,6 +255,4 @@ describe('simple.test.js', () => {
     });
   });
 
-
 });
-

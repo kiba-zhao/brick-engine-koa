@@ -67,3 +67,10 @@ export function controller(target: any, opts: CollectionOpts): any;
  * @return {any} 目标对象
  */
 export function rest(target: any, opts: CollectionOpts): any;
+/**
+ * 设置中间件工厂
+ * @param {any} target 目标对象
+ * @param {Function} factory 中间件生成工厂
+ * @return {any} 目标对象
+ */
+export function middleware(target: any, factory: Function): any;

@@ -39,9 +39,10 @@ class KoaServer {
       }
     }
 
-    if (opts.http) { start(app, http, opts.http, opts.logger); }
-    if (opts.https) { start(app, https, opts.https, opts.logger); }
-    if (opts.http2) { start(app, http2, opts.http2, opts.logger); }
+    if (opts.http) { return start(app, http, opts.http, opts.logger); }
+    if (opts.https) { return start(app, https, opts.https, opts.logger); }
+    if (opts.http2) { return start(app, http2, opts.http2, opts.logger); }
+    return null;
   }
 }
 
@@ -59,5 +60,5 @@ function start(app, module, opts, logger) {
     };
   }
   const server = module.createServer(opts.server, app.callback());
-  server.listen(opts.listen, cb);
+  return server.listen(opts.listen, cb);
 }

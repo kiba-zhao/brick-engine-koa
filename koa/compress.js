@@ -6,13 +6,14 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
 const compress = require('koa-compress');
 
-module.exports = config => {
+module.exports = engine => {
 
+  const config = engine.config;
   const koaCompress = config.koaCompress;
   return koaCompress ? compress(koaCompress) : undefined;
 };
 
-inject(module.exports, { deps: [ 'config' ], name: 'compress' });
+inject(module.exports, { deps: [ ENGINE ], name: 'compress' });

@@ -1,3 +1,4 @@
 import KoaServer = require("./lib/koa_server");
-export function createKoaServer(...args: any[]): KoaServer;
-export { KoaServer };
+import { KOA } from "./lib/constants";
+import { APP } from "./lib/constants";
+export { KoaServer, KOA, APP };

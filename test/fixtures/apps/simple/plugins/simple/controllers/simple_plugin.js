@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { controller } = require('../../../../../../..');
+const { PLUGIN, controller, middleware } = require('../../../../../../..');
 
 class SimplePlugin {
 
@@ -20,3 +20,12 @@ class SimplePlugin {
 module.exports = SimplePlugin;
 
 controller(SimplePlugin, { path: '/simple' });
+middleware(SimplePlugin, item => (item.module[PLUGIN] ? noop(item.module[PLUGIN]) : undefined));
+
+function noop(plugin) {
+  return (ctx, next) => {
+    ctx.params = ctx.params || {};
+    ctx.params.plugin = plugin;
+    next();
+  };
+}

@@ -1,6 +1,6 @@
 /**
  * @fileOverview xboot引导文件
- * @name xboot.config.js
+ * @name boot.js
  * @author kiba.x.zhao <kiba.rain@qq.com>
  * @license MIT
  */

@@ -1,2 +1,2 @@
-declare function _exports(boot: any, config: any): Function;
+declare function _exports(engine: any): Function;
 export = _exports;

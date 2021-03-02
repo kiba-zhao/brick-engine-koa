@@ -6,11 +6,11 @@
  */
 'use strict';
 
-exports.log4js = {
-  configure: {
-    categories: {
-      default: { level: 'trace' },
-      koa: { level: 'trace' },
-    },
+const { LOG4JS } = require('brick-log4js');
+
+exports[LOG4JS] = {
+  categories: {
+    default: { level: 'trace' },
+    koa: { level: 'trace' },
   },
 };

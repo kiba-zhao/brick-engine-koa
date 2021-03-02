@@ -6,6 +6,8 @@
  */
 'use strict';
 
+const { KOA } = require('../plugins/koa');
+
 module.exports = env => {
   const exports = {};
 
@@ -13,7 +15,7 @@ module.exports = env => {
   if (isNaN(httpPort)) {
     httpPort = 80;
   }
-  exports.koa = {
+  exports[KOA] = {
     http: {
       msg: `http listen on ${httpPort}`, listen: httpPort,
     },

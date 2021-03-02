@@ -8,7 +8,7 @@
 
 const assert = require('assert');
 const { isString, isObject, isSymbol, isUndefined, isArray, isFunction } = require('lodash');
-const { KOA_ROUTES, KOA_CONTROLLERS, KOA_RESTS } = require('./constants');
+const { KOA_ROUTES, KOA_CONTROLLERS, KOA_RESTS, KOA_MIDDLEWARE } = require('./constants');
 
 /**
  * 路由可选项
@@ -122,3 +122,24 @@ function rest(target, opts) {
 }
 
 exports.rest = rest;
+
+/**
+ * 设置中间件工厂
+ * @param {any} target 目标对象
+ * @param {Function} factory 中间件生成工厂
+ * @return {any} 目标对象
+ */
+function middleware(target, factory) {
+
+  assert(target !== undefined && target !== null, '[koa-router] middleware Error: wrong target');
+  assert(isFunction(factory), '[koa-router] middleware Error: wrong factory');
+
+  if (!target[KOA_MIDDLEWARE]) {
+    target[KOA_MIDDLEWARE] = [];
+  }
+  const mws = target[KOA_MIDDLEWARE];
+  mws.push(factory);
+  return target;
+}
+
+exports.middleware = middleware;

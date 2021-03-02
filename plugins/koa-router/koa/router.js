@@ -6,12 +6,14 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
+const { KOA_ROUTER } = require('../lib/constants');
 
-module.exports = (config, router) => {
+module.exports = (engine, router) => {
 
+  const config = engine.config;
   const koaRouter = config.koaRouter;
   return koaRouter ? router.middleware : undefined;
 };
 
-inject(module.exports, { deps: [ 'config', 'koa-router' ], name: 'router' });
+inject(module.exports, { deps: [ ENGINE, KOA_ROUTER ], name: 'router' });

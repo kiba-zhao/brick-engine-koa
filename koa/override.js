@@ -6,14 +6,15 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
 const override = require('koa-override');
 
-module.exports = config => {
+module.exports = engine => {
 
+  const config = engine.config;
   const koaOverride = config.koaOverride;
   return koaOverride ? override(koaOverride) : undefined;
 
 };
 
-inject(module.exports, { deps: [ 'config' ], namne: 'override' });
+inject(module.exports, { deps: [ ENGINE ], namne: 'override' });

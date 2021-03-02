@@ -6,20 +6,21 @@
  */
 'use strict';
 
-const { inject } = require('brick-engine');
+const { ENGINE, inject } = require('brick-engine');
 const { createKoaServe } = require('../');
 
-module.exports = (boot, config) => {
+module.exports = engine => {
 
+  const config = engine.config;
   const { opts, patterns, ...options } = config.koaStatic || {};
   if (!patterns) {
     return undefined;
   }
 
   const _opts = Object.assign({ expand: false }, opts);
-  const loader = boot.createBootLoader(patterns, boot.context, _opts);
-  const serve = createKoaServe(loader, options);
+  const modules = engine.load(patterns, _opts);
+  const serve = createKoaServe(modules, options);
   return serve.middleware;
 };
 
-inject(module.exports, { deps: [ 'boot', 'config' ], name: 'static' });
+inject(module.exports, { deps: [ ENGINE ], name: 'static' });

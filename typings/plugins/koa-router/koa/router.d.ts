@@ -1,2 +1,2 @@
-declare function _exports(config: any, router: any): any;
+declare function _exports(engine: any, router: any): any;
 export = _exports;
