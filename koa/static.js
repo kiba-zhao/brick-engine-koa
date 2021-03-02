@@ -7,7 +7,7 @@
 'use strict';
 
 const { ENGINE, inject } = require('brick-engine');
-const { createKoaServe } = require('../');
+const Serve = require('../lib/serve');
 
 module.exports = engine => {
 
@@ -19,7 +19,7 @@ module.exports = engine => {
 
   const _opts = Object.assign({ expand: false }, opts);
   const modules = engine.load(patterns, _opts);
-  const serve = createKoaServe(modules, options);
+  const serve = new Serve(modules, options);
   return serve.middleware;
 };
 

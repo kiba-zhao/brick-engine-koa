@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { KOA } = require('../plugins/koa');
+const { KOA } = require('../lib/constants');
 
 module.exports = env => {
   const exports = {};

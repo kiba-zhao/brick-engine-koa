@@ -9,15 +9,3 @@
 exports.log4js = {
   package: 'brick-log4js',
 };
-
-exports.koa = {
-  package: './plugins/koa',
-};
-
-exports.koaStatic = {
-  package: './plugins/koa-static',
-};
-
-exports.koaRouter = {
-  package: './plugins/koa-router',
-};

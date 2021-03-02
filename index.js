@@ -6,9 +6,9 @@
  */
 'use strict';
 const engine = require('brick-engine');
-const { APP } = require('./plugins/koa');
-const { route, controller, rest, middleware } = require('./plugins/koa-router');
 const { logger } = require('brick-log4js');
+const { APP } = require('./lib/constants');
+const { route, controller, rest, middleware } = require('./lib/utils');
 
 exports.APP = APP;
 

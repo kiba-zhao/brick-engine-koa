@@ -16,9 +16,12 @@
   "files": [
     "typings",
     "package.json",
-    "plugins",
+    "index.js", 
+    "app.js",       
+    "lib",
+    "koa",    
     "plugin.js",
-    "xboot.config.js"
+    "boot.js"
   ],
   "repository": {
     "type": "git",
@@ -64,7 +67,10 @@
       "^@/(.*)$": "<rootDir>/$1"
     },
     "collectCoverageFrom": [
-      "plugins/**/*.js"
+      "app.js", 
+      "index.js",      
+      "lib/**/*.js",
+      "koa/**/*.js"      
     ]
   },
   "author": "kiba.x.zhao",

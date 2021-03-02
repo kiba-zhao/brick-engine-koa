@@ -1,6 +1,5 @@
 {
-  "include": ["plugins/**/*","*.js"],
-  "exclude":["plugins/*/test"],
+  "include": ["koa/**/*","lib/**/*","*.js"],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,

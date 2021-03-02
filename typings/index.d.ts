@@ -1,7 +1,7 @@
-import { APP } from "./plugins/koa";
+import { APP } from "./lib/constants";
 import { logger } from "brick-log4js";
-import { route } from "./plugins/koa-router";
-import { controller } from "./plugins/koa-router";
-import { rest } from "./plugins/koa-router";
-import { middleware } from "./plugins/koa-router";
+import { route } from "./lib/utils";
+import { controller } from "./lib/utils";
+import { rest } from "./lib/utils";
+import { middleware } from "./lib/utils";
 export { APP, logger, route, controller, rest, middleware };

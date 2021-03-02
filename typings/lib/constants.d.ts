@@ -1,3 +1,5 @@
+export var KOA: symbol;
+export var APP: symbol;
 export var KOA_ROUTER: symbol;
 export var KOA_ROUTES: symbol;
 export var KOA_CONTROLLERS: symbol;

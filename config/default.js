@@ -8,7 +8,7 @@
 
 const path = require('path');
 const { LOG4JS } = require('brick-log4js');
-const { KOA } = require('../plugins/koa');
+const { KOA } = require('../lib/constants');
 
 exports[LOG4JS] = {
   appenders: {

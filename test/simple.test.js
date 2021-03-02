@@ -10,7 +10,7 @@ const path = require('path');
 const request = require('supertest');
 const faker = require('faker');
 const { Engine, inject } = require('brick-engine');
-const { APP } = require('../plugins/koa');
+const { APP } = require('..');
 
 const APP_PATH = path.join(__dirname, 'fixtures', 'apps', 'simple');
 const APP_CONFIG = require('./fixtures/apps/simple/config/default');
