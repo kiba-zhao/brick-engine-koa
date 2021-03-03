@@ -8,6 +8,15 @@
 
 const path = require('path');
 
+exports.log4js = {
+  package: 'brick-log4js',
+};
+
+exports.koa = {
+  package: path.join('..', '..', '..', '..'),
+  dependencies: [ 'log4js' ],
+};
+
 exports.simple = {
   package: path.join(__dirname, 'plugins', 'simple'),
 };

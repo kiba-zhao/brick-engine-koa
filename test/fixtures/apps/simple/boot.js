@@ -6,6 +6,4 @@
  */
 'use strict';
 
-const path = require('path');
-
-exports.engine = path.join(__dirname, '..', '..', '..', '..');
+exports.engine = 'brick-engine';

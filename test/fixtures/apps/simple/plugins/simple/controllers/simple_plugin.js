@@ -6,7 +6,8 @@
  */
 'use strict';
 
-const { PLUGIN, controller, middleware } = require('../../../../../../..');
+const { PLUGIN } = require('brick-engine');
+const { controller, middleware } = require('../../../../../../..');
 
 class SimplePlugin {
 
@@ -20,9 +21,11 @@ class SimplePlugin {
 module.exports = SimplePlugin;
 
 controller(SimplePlugin, { path: '/simple' });
-middleware(SimplePlugin, item => (item.module[PLUGIN] ? noop(item.module[PLUGIN]) : undefined));
+middleware(SimplePlugin, noop);
 
-function noop(plugin) {
+function noop(target) {
+  console.log(target);
+  const plugin = target.module[PLUGIN];
   return (ctx, next) => {
     ctx.params = ctx.params || {};
     ctx.params.plugin = plugin;

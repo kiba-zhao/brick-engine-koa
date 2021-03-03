@@ -44,7 +44,7 @@ koa框架启动配置
 const {KOA} = require('brick-adapter-koa');
 
 exports[KOA] = {
-  // 中间件文件匹配规则
+  // 中间件文件匹配规则．插件将加载目录下文件模块构建koa中间件
   patterns: 'koa/**/*.js',
   // 中间件文件加载可选参数
   opts:{},

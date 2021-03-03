@@ -1,7 +1,7 @@
 import { APP } from "./lib/constants";
-import { logger } from "brick-log4js";
+import { KOA } from "./lib/constants";
 import { route } from "./lib/utils";
 import { controller } from "./lib/utils";
 import { rest } from "./lib/utils";
 import { middleware } from "./lib/utils";
-export { APP, logger, route, controller, rest, middleware };
+export { APP, KOA, route, controller, rest, middleware };

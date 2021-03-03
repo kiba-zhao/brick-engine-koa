@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { ENGINE, provide, inject } = require('../../../../..');
+const { ENGINE, provide, inject } = require('brick-engine');
 
 class SimpleService {
 
