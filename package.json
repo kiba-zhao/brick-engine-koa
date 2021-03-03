@@ -16,10 +16,10 @@
   "files": [
     "typings",
     "package.json",
-    "index.js", 
-    "app.js",       
+    "index.js",
+    "app.js",
     "lib",
-    "koa",    
+    "koa",
     "plugin.js",
     "boot.js"
   ],
@@ -67,10 +67,10 @@
       "^@/(.*)$": "<rootDir>/$1"
     },
     "collectCoverageFrom": [
-      "app.js", 
-      "index.js",      
+      "app.js",
+      "index.js",
       "lib/**/*.js",
-      "koa/**/*.js"      
+      "koa/**/*.js"
     ]
   },
   "author": "kiba.x.zhao",
@@ -79,7 +79,6 @@
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "brick-engine": "file:../brick-engine",
-    "brick-log4js": "file:../brick-log4js",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",

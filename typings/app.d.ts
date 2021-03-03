@@ -1,2 +1,2 @@
-declare function _exports(engine: any, log4js: any): void;
+declare function _exports(engine: any): void;
 export = _exports;

@@ -1,15 +1,11 @@
 # brick-adapter-koa #
 [brick-engine](https://github.com/kiba-zhao/brick-engine)的[koa](https://github.com/koajs/koa#readme)框架适配插件.用于支持使用[koa](https://github.com/koajs/koa#readme)框架进行http项目开发.
 
-> 需要依赖于[brick-log4js](https://github.com/kiba-zhao/brick-log4js)插件来记录日志．
-
 ## Install ##
 
 ``` shell
 npm install --save brick-adapter-koa
 
-# 安装brick-log4js依赖包
-# npm install --save brick-log4js
 ```
 
 ## Usage ##
@@ -20,13 +16,7 @@ npm install --save brick-adapter-koa
 // {cwd}/node_modules/{xxx engine}/plugin.js
 
 exports.adapterKoa = {
-    package:'brick-adapter-koa',
-    dependencies:['log4js']
-};
-
-// 启用log4js插件
-exports.log4js = {
-    package:'brick-log4js'
+    package:'brick-adapter-koa'
 };
 ```
 

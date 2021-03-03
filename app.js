@@ -7,14 +7,13 @@
 'use strict';
 
 const { ENGINE, inject } = require('brick-engine');
-const { LOG4JS } = require('brick-log4js');
 const { assign, isFunction, isString, isSymbol } = require('lodash');
 
 const Router = require('./lib/router');
 const KoaServer = require('./lib/koa_server');
 const { KOA, APP } = require('./lib/constants');
 
-module.exports = (engine, log4js) => {
+module.exports = engine => {
 
   const config = engine.config;
   if (!config[KOA]) {
@@ -24,16 +23,16 @@ module.exports = (engine, log4js) => {
   const { patterns, opts, ...options } = config.koaRouter || {};
   const router = new Router(options);
   if (patterns) {
-    engine.build(patterns, opts, init.bind(this, engine, log4js, router));
+    engine.build(patterns, opts, init.bind(this, engine, router));
   } else {
-    init(engine, log4js, router);
+    init(engine, router);
   }
 
 };
 
-inject(module.exports, { deps: [ ENGINE, LOG4JS ] });
+inject(module.exports, { deps: [ ENGINE ] });
 
-function init(engine, log4js, router, modules) {
+function init(engine, router, modules) {
 
   if (modules) {
     router.init(modules);
@@ -43,8 +42,7 @@ function init(engine, log4js, router, modules) {
   const config = engine.config[KOA];
 
   const { patterns, opts, ...options } = config;
-  const logger = log4js.getLogger('koa');
-  const server = new KoaServer(assign({ logger }, options));
+  const server = new KoaServer(options);
   inject(server, { name: KOA });
   engine.install(server);
   if (patterns) {
