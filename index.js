@@ -5,10 +5,9 @@
  * @license MIT
  */
 'use strict';
-const { APP, KOA } = require('./lib/constants');
+const { KOA } = require('./lib/constants');
 const { route, controller, rest, middleware } = require('./lib/utils');
 
-exports.APP = APP;
 exports.KOA = KOA;
 
 exports.route = route;

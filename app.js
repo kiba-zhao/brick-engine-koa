@@ -11,7 +11,7 @@ const { assign, isFunction, isString, isSymbol } = require('lodash');
 
 const Router = require('./lib/router');
 const KoaServer = require('./lib/koa_server');
-const { KOA, APP } = require('./lib/constants');
+const { KOA } = require('./lib/constants');
 
 module.exports = engine => {
 
@@ -46,13 +46,13 @@ function init(engine, router, modules) {
   inject(server, { name: KOA });
   engine.install(server);
   if (patterns) {
-    engine.build(patterns, assign({ model: false }, opts), setup.bind(this, engine, server, ctx));
+    engine.build(patterns, assign({ model: false }, opts), setup.bind(this, server, ctx));
   } else {
-    setup(engine, server, ctx);
+    setup(server, ctx);
   }
 }
 
-function setup(engine, server, ctx, modules) {
+function setup(server, ctx, modules) {
 
   if (modules) {
     for (const m of modules) {
@@ -62,7 +62,5 @@ function setup(engine, server, ctx, modules) {
     }
   }
 
-  const app = server.init(ctx);
-  inject(app, { name: APP });
-  engine.install(app);
+  server.init(ctx);
 }

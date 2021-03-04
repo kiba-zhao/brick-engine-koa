@@ -24,7 +24,6 @@ controller(SimplePlugin, { path: '/simple' });
 middleware(SimplePlugin, noop);
 
 function noop(target) {
-  console.log(target);
   const plugin = target.module[PLUGIN];
   return (ctx, next) => {
     ctx.params = ctx.params || {};

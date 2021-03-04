@@ -10,7 +10,7 @@ const path = require('path');
 const request = require('supertest');
 const faker = require('faker');
 const { Engine, inject } = require('brick-engine');
-const { APP } = require('..');
+const { KOA } = require('..');
 
 const APP_PATH = path.join(__dirname, 'fixtures', 'apps', 'simple');
 const APP_CONFIG = require('./fixtures/apps/simple/config/default');
@@ -22,18 +22,29 @@ describe('simple.test.js', () => {
   let app,
     engine;
 
+  function setup(done) {
+    return koa => {
+      koa.once('start', () => {
+        app = koa.server;
+        done();
+      });
+    };
+  }
+
   beforeAll(done => {
     engine = new Engine({ chdir: APP_PATH });
     engine.init();
 
-    const fn = _ => { app = _; done(); };
-    inject(fn, { deps: [ APP ] });
+    const fn = setup(done);
+    inject(fn, { deps: [ KOA ] });
     engine.use(fn);
   });
 
-  afterAll(() => {
-    app = undefined;
+  afterAll(done => {
+    const server = app;
     engine = undefined;
+    app = undefined;
+    server.close(done);
   });
 
   describe('koa-static', () => {
