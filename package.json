@@ -1,5 +1,5 @@
 {
-  "name": "brick-adapter-koa",
+  "name": "brick-koa-adapter",
   "version": "0.0.0",
   "description": "koa with brick-engine",
   "main": "index.js",
@@ -25,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kiba-zhao/brick-adapter-koa.git"
+    "url": "git+https://github.com/kiba-zhao/brick-koa-adapter.git"
   },
   "keywords": [
     "koa",
@@ -34,9 +34,9 @@
     "brick-engine"
   ],
   "bugs": {
-    "url": "https://github.com/kiba-zhao/brick-adapter-koa/issues"
+    "url": "https://github.com/kiba-zhao/brick-koa-adapter/issues"
   },
-  "homepage": "https://github.com/kiba-zhao/brick-adapter-koa#readme",
+  "homepage": "https://github.com/kiba-zhao/brick-koa-adapter#readme",
   "devDependencies": {
     "@types/faker": "^5.1.7",
     "@types/jest": "^26.0.20",

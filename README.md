@@ -1,10 +1,10 @@
-# brick-adapter-koa #
+# brick-koa-adapter #
 [brick-engine](https://github.com/kiba-zhao/brick-engine)的[koa](https://github.com/koajs/koa#readme)框架适配插件.用于支持使用[koa](https://github.com/koajs/koa#readme)框架进行http项目开发.
 
 ## Install ##
 
 ``` shell
-npm install --save brick-adapter-koa
+npm install --save brick-koa-adapter
 
 ```
 
@@ -16,7 +16,7 @@ npm install --save brick-adapter-koa
 // {cwd}/node_modules/{xxx engine}/plugin.js
 
 exports.adapterKoa = {
-    package:'brick-adapter-koa'
+    package:'brick-koa-adapter'
 };
 ```
 
@@ -31,7 +31,7 @@ koa框架启动配置
 // {cwd}/node_modules/{xxx engine}/config/*.js
 // {cwd}/node_modules/{xxx plugin}/config/*.js
 
-const {KOA} = require('brick-adapter-koa');
+const {KOA} = require('brick-koa-adapter');
 
 exports[KOA] = {
   // 中间件文件匹配规则．插件将加载目录下文件模块构建koa中间件
@@ -173,7 +173,7 @@ exports.koaOnError = {
 koa插件server启动应用常量，通常用于supertest测试时inject为依赖,使用engine.use获取app对象．
 
 ``` javascript
-const { APP } = require('brick-adapter-koa');
+const { APP } = require('brick-koa-adapter');
 
 const fn = _ => { app = _; done(); };
 inject(fn, { deps: [ APP ] });
@@ -195,7 +195,7 @@ engine.use(fn);
 * opts.middlewares {Array<Function>}: 路由挂载的中间件
 
 ``` javascript
-const {route} = require('brick-adapter-koa');
+const {route} = require('brick-koa-adapter');
 
 class SimpleController {}
 module.exports = SimpleController;
@@ -226,7 +226,7 @@ route(module.exports, { property: 'inject', method: 'get', path: '/simple-inject
 * opts.middlewares {{[key:{String}]:Array<Function>}}: 路由挂载的中间件
 
 ``` javascript
-const { controller } = require('brick-adapter-koa');
+const { controller } = require('brick-koa-adapter');
 
 class SimpleController {}
 module.exports = SimpleController;
@@ -261,7 +261,7 @@ restful控制器可选参数
 * opts.middlewares {{[key:{String}]:Array<Function>}}: 路由挂载的中间件
 
 ``` javascript
-const { rest } = require('brick-adapter-koa');
+const { rest } = require('brick-koa-adapter');
 
 class SimpleController {}
 module.exports = SimpleController;
@@ -293,7 +293,7 @@ rest(module.exports, { path: '/simple', middlewares: { get: [ noop ] } });
 * opts.middlewares {Array<Function>}: 路由挂载的中间件
 
 ``` javascript
-const { PLUGIN, middleware } = require('brick-adapter-koa');
+const { PLUGIN, middleware } = require('brick-koa-adapter');
 
 class SimpleController {}
 module.exports = SimpleController;
@@ -314,8 +314,8 @@ function noop(plugin) {
 使用`jsdoc`生成注释文档
 
 ``` shell
-git clone https://github.com/kiba-zhao/brick-adapter-koa.git
-cd brick-adapter-koa
+git clone https://github.com/kiba-zhao/brick-koa-adapter.git
+cd brick-koa-adapter
 npm install
 npm run docs
 open docs/index.html
