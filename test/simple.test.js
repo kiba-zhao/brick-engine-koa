@@ -157,6 +157,12 @@ describe('simple.test.js', () => {
         .expect(204, done);
     });
 
+    it('DELETE /plugins/simple', done => {
+      request(app)
+        .del('/plugins/simple')
+        .expect(400, done);
+    });
+
   });
 
   describe('koa-router: rest', () => {

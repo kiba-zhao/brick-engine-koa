@@ -15,7 +15,9 @@ module.exports = (koa, engine) => {
   const config = engine.config;
   const koaOnError = config.koaOnError;
   const app = koa.app;
-  onerror(app, koaOnError);
+  if (koaOnError) {
+    onerror(app, koaOnError);
+  }
 
 };
 

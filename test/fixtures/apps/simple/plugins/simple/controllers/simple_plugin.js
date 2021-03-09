@@ -16,6 +16,10 @@ class SimplePlugin {
     ctx.status = 200;
   }
 
+  delete(ctx) {
+    ctx.throw(400, 'name required');
+  }
+
 }
 
 module.exports = SimplePlugin;
@@ -25,9 +29,9 @@ middleware(SimplePlugin, noop);
 
 function noop(target) {
   const plugin = target.module[PLUGIN];
-  return (ctx, next) => {
+  return async (ctx, next) => {
     ctx.params = ctx.params || {};
     ctx.params.plugin = plugin;
-    next();
+    await next();
   };
 }

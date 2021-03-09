@@ -10,7 +10,7 @@ const { KOA } = require('../lib/constants');
 
 exports[KOA] = {
   patterns: 'koa/**/*.js',
-  http: { msg: 'http listen on 3000', listen: { port: 3000, host: 'localhost' } },
+  http: { listen: { port: 3000, host: 'localhost' } },
   middlewaresProperty: 'middlewares',
   middlewares: [ 'cors', 'compress', 'static', 'bodyParser', 'override', 'router' ],
 };
@@ -28,6 +28,8 @@ exports.koaStatic = {
 exports.koaBodyParser = {};
 
 exports.koaOverride = {};
+
+exports.koaOnError = {};
 
 exports.koaRouter = {
   patterns: 'controllers/**/*.js',

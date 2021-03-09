@@ -17,4 +17,4 @@ module.exports = engine => {
 
 };
 
-inject(module.exports, { deps: [ ENGINE ], namne: 'override' });
+inject(module.exports, { deps: [ ENGINE ], name: 'override' });
