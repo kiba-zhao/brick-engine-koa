@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { ENGINE, inject } = require('brick-engine');
+const { inject } = require('brick-engine');
 const { assign, isFunction, isString, isSymbol } = require('lodash');
 
 const Router = require('./lib/router');
@@ -30,14 +30,11 @@ module.exports = engine => {
 
 };
 
-inject(module.exports, { deps: [ ENGINE ] });
-
 function init(engine, router, modules) {
 
   if (modules) {
     router.init(modules);
   }
-
   const ctx = { router: router.middleware };
   const config = engine.config[KOA];
 
