@@ -6,9 +6,7 @@
  */
 'use strict';
 
-const { KOA } = require('../lib/constants');
-
-exports[KOA] = {
+exports.koa = {
   patterns: 'koa/**/*.js',
   http: { listen: { port: 3000, host: 'localhost' } },
   middlewaresProperty: 'middlewares',

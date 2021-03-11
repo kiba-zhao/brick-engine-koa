@@ -16,7 +16,7 @@ const { KOA } = require('./lib/constants');
 module.exports = engine => {
 
   const config = engine.config;
-  if (!config[KOA]) {
+  if (!config.koa) {
     return;
   }
 
@@ -36,7 +36,7 @@ function init(engine, router, modules) {
     router.init(modules);
   }
   const ctx = { router: router.middleware };
-  const config = engine.config[KOA];
+  const config = engine.config.koa;
 
   const { patterns, opts, ...options } = config;
   const server = new KoaServer(options);

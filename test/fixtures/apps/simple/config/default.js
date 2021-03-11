@@ -6,15 +6,13 @@
  */
 'use strict';
 
-const { ENGINE } = require('brick-engine');
-
 exports.koaJwt = {
   secret: 'asdfgh123',
 };
 
 exports.injectTestString = 'qwerty321';
 
-exports[ENGINE] = {
+exports.engine = {
   modules: { services: { patterns: 'services/**/*.js' } },
 };
 
