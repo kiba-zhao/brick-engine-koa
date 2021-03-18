@@ -7,7 +7,7 @@
 'use strict';
 
 const { PLUGIN } = require('brick-engine');
-const { controller, middleware } = require('../../../../../../..');
+const { controller, middleware } = require('../../../../../../../..');
 
 class SimplePlugin {
 

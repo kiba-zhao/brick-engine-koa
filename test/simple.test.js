@@ -14,8 +14,8 @@ const { KOA } = require('..');
 
 const APP_PATH = path.join(__dirname, 'fixtures', 'apps', 'simple');
 const APP_CONFIG = require('./fixtures/apps/simple/config/default');
-const STATIC_JSON = require('./fixtures/apps/simple/public/static.json');
-const SIMPLE_JSON = require('./fixtures/apps/simple/plugins/simple/public/simple.json');
+const STATIC_JSON = require('./fixtures/apps/simple/app/public/static.json');
+const SIMPLE_JSON = require('./fixtures/apps/simple/plugins/simple/app/public/simple.json');
 
 describe('simple.test.js', () => {
 

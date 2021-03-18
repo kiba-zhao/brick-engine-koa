@@ -15,7 +15,7 @@ npm install --save brick-koa-adapter
 // {cwd}/plugin.js
 // {cwd}/node_modules/{xxx engine}/plugin.js
 
-exports.adapterKoa = {
+exports.koaAdapter = {
     package:'brick-koa-adapter'
 };
 ```
@@ -99,7 +99,7 @@ exports.koaStatic = {
   // 插件静态文件挂载到指定路径下
   // { [plugin.js中的插件key] : '匹配路径'}
   plugins:{
-    simple: '/public'
+    simple: 'app/public'
   },
   // koa-static构建参数
   ...
@@ -139,7 +139,7 @@ exports.koaOverride = { ... }
 
 exports.koaRouter = {
   // 路由功能文件匹配规则
-  patterns: 'controllers/**/*.js',
+  patterns: 'app/controllers/**/*.js',
   // 路由功能文件加载可选参数
   opts:{},
   // 路由功能挂载到指定路径下

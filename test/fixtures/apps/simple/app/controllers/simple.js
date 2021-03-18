@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const { route, controller, rest } = require('../../../../..');
+const { route, controller, rest } = require('../../../../../..');
 const { provide } = require('brick-engine');
 
 class SimpleController {

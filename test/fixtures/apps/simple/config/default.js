@@ -13,7 +13,7 @@ exports.koaJwt = {
 exports.injectTestString = 'qwerty321';
 
 exports.engine = {
-  modules: { services: { patterns: 'services/**/*.js' } },
+  modules: { services: { patterns: 'app/services/**/*.js' } },
 };
 
 exports.koaRouter = {

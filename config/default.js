@@ -20,7 +20,7 @@ exports.koaCompress = {
 };
 
 exports.koaStatic = {
-  patterns: 'public/',
+  patterns: 'app/public/',
 };
 
 exports.koaBodyParser = {};
@@ -30,5 +30,5 @@ exports.koaOverride = {};
 exports.koaOnError = {};
 
 exports.koaRouter = {
-  patterns: 'controllers/**/*.js',
+  patterns: 'app/controllers/**/*.js',
 };
