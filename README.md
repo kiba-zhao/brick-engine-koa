@@ -35,7 +35,7 @@ const {KOA} = require('brick-koa-adapter');
 
 exports[KOA] = {
   // 中间件文件匹配规则．插件将加载目录下文件模块构建koa中间件
-  patterns: 'koa/**/*.js',
+  patterns: 'app/koa/**/*.js',
   // 中间件文件加载可选参数
   opts:{},
   // http服务配置,详情请参考http,https,http2对应createServer函数的options参数
@@ -91,7 +91,7 @@ exports.koaCompress = {};
 
 exports.koaStatic = {
   // 静态文件目录匹配规则
-  patterns: 'public/',
+  patterns: 'app/public/',
   // 静态文件目录加载可选参数
   opts:{},
   // 匹配路径

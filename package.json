@@ -19,7 +19,7 @@
     "index.js",
     "app.js",
     "lib",
-    "koa",
+    "app",
     "plugin.js",
     "boot.js"
   ],
@@ -71,7 +71,7 @@
       "app.js",
       "index.js",
       "lib/**/*.js",
-      "koa/**/*.js"
+      "app/**/*.js"
     ]
   },
   "author": "kiba.x.zhao",

@@ -1,5 +1,5 @@
 {
-  "include": ["koa/**/*","lib/**/*","*.js"],
+  "include": ["app/**/*","lib/**/*","*.js"],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,

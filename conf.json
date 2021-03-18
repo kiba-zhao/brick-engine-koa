@@ -3,7 +3,7 @@
   "recurseDepth": 10,
   "sourceType": "module",
   "source": {
-    "include": ["*.js","lib","koa"],
+    "include": ["*.js","lib","app"],
     "includePattern": ".+\\.js$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
