@@ -7,7 +7,7 @@
 'use strict';
 
 exports.koa = {
-  patterns: 'koa/**/*.js',
+  patterns: 'app/koa/**/*.js',
   http: { listen: { port: 3000, host: 'localhost' } },
   middlewaresProperty: 'middlewares',
   middlewares: [ 'cors', 'compress', 'static', 'bodyParser', 'override', 'router' ],

@@ -7,7 +7,7 @@
 'use strict';
 
 const { ENGINE, inject } = require('brick-engine');
-const { KOA } = require('../lib/constants');
+const { KOA } = require('../../lib/constants');
 const onerror = require('koa-onerror');
 
 module.exports = (koa, engine) => {

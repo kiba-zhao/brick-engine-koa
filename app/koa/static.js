@@ -7,7 +7,7 @@
 'use strict';
 
 const { ENGINE, inject } = require('brick-engine');
-const Serve = require('../lib/serve');
+const Serve = require('../../lib/serve');
 
 module.exports = engine => {
 
